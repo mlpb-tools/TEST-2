@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MLS4YOU — #1 Emploi</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Script Lucide Icons (Correction: Utilisation de la version UMD spécifique pour garantir la variable globale) -->
+  <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      /* PALETTE STRICTE LS4YOU */
+      --red: #C62828;         /* Rouge cerise profond */
+      --yellow: #FFC928;      /* Jaune vif chaleureux */
+      --turq: #20B8AE;        /* Turquoise lumineux */
+      --mint: #BFEFE8;        /* Menthe pastel */
+      --orange: #FFB067;      /* Orange clair */
+
+      --bg: #FFF9F0;          /* Fond crème chaleureux */
+      --ink: #101114;         
+      --muted: rgba(16, 17, 20, 0.7);
+
+      --shadow: 0 16px 30px rgba(16, 17, 20, 0.08);
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* TYPOGRAPHIE GLOBALE */
+    h1, h2, h3, .baloo {
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+    }
+
+    /* --- ARRIÈRE-PLAN VECTORIEL GLOBAL --- */
+    .bg-shapes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-circle {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(2px);
+      opacity: 0.8;
+    }
+    .c-mint { width: 400px; height: 400px; left: -100px; top: -100px; background: var(--mint); opacity: 0.9;}
+    .c-yellow { width: 350px; height: 350px; right: -100px; top: 15%; background: rgba(255, 201, 40, 0.5); }
+    .c-orange { width: 450px; height: 450px; left: -150px; bottom: 0px; background: rgba(255, 176, 103, 0.4); }
+    .c-red { width: 300px; height: 300px; right: -50px; bottom: -50px; background: rgba(198, 40, 40, 0.25); }
+
+    /* Formes Puzzle de fond */
+    .bg-puzzle {
+      position: absolute;
+      opacity: 0.15;
+      animation: float 20s ease-in-out infinite alternate;
+    }
+    .p-red { fill: var(--red); width: 250px; top: 10%; right: 10%; transform: rotate(15deg); }
+    .p-yellow { fill: var(--yellow); width: 300px; top: 50%; left: -5%; transform: rotate(-25deg); animation-delay: -5s; }
+    .p-turq { fill: var(--turq); width: 200px; bottom: 5%; right: 20%; transform: rotate(45deg); animation-delay: -10s; }
+
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      100% { transform: translateY(30px) rotate(10deg); }
+    }
+
+    /* --- CONTENEUR PRINCIPAL --- */
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max);
+      margin: 22px auto 28px;
+      padding: 0 16px 26px;
+    }
+
+    /* CARD CONTAINER */
+    .frame {
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      overflow: hidden;
+      border: 5px solid transparent;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.95)), linear-gradient(135deg, var(--red), var(--yellow), var(--turq));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+    }
+
+    /* --- HEADER --- */
+    .hero {
+      position: relative;
+      border-bottom: 4px solid var(--turq);
+      padding: 16px;
+      background: #fff;
+    }
+
+    .hero-inner {
+      position: relative;
+      border-radius: 18px;
+      overflow: hidden;
+      min-height: clamp(140px, 25vw, 190px);
+      display: flex;
+      align-items: center;
+      padding: 24px 32px;
+    }
+
+    /* Pattern Header */
+    .header-pattern {
+      position: absolute;
+      inset: 0;
+      background: #fdfdfd;
+      z-index: 0;
+    }
+    
+    .hs { position: absolute; border-radius: 50%; opacity: 0.65; mix-blend-mode: multiply; }
+    .hs-1 { background: var(--red); width: 140px; height: 140px; top: -40px; left: 10%; }
+    .hs-2 { background: var(--yellow); width: 180px; height: 180px; bottom: -60px; right: 20%; }
+    .hs-3 { background: var(--turq); width: 120px; height: 120px; top: 20px; right: 40%; }
+    .hs-4 { background: var(--mint); width: 90px; height: 90px; bottom: 10px; left: 30%; }
+    .hs-5 { background: var(--orange); width: 70px; height: 70px; top: 60px; left: 45%; }
+
+    .hs-outline { position: absolute; border-radius: 50%; background: transparent; }
+    .ho-1 { border: 6px solid var(--red); width: 100px; height: 100px; top: 15px; right: 15%; opacity: 0.7; }
+    .ho-2 { border: 4px solid var(--turq); width: 60px; height: 60px; bottom: 20px; left: 15%; opacity: 0.8; }
+    .ho-3 { border: 8px solid var(--yellow); width: 150px; height: 150px; top: -30px; left: 35%; opacity: 0.6; }
+    .ho-4 { border: 3px solid var(--orange); width: 40px; height: 40px; top: 40px; right: 5%; opacity: 0.9; }
+    .ho-5 { border: 5px solid var(--mint); width: 110px; height: 110px; bottom: -20px; left: 50%; opacity: 0.7; }
+    .ho-6 { border: 4px solid var(--red); width: 50px; height: 50px; bottom: 40px; right: 35%; opacity: 0.5; }
+    .ho-7 { border: 7px solid var(--turq); width: 130px; height: 130px; top: 50px; left: 5%; opacity: 0.4; }
+
+    .hp { position: absolute; opacity: 0.85; filter: drop-shadow(2px 2px 0px rgba(0,0,0,0.1)); }
+    .hp-1 { fill: var(--turq); width: 90px; top: 10px; left: 25%; transform: rotate(15deg); }
+    .hp-2 { fill: var(--red); width: 110px; bottom: 5px; right: 10%; transform: rotate(-20deg); }
+    .hp-3 { fill: var(--yellow); width: 80px; top: 15px; right: 25%; transform: rotate(45deg); }
+    .hp-4 { fill: var(--orange); width: 70px; bottom: 20px; left: 40%; transform: rotate(-45deg); }
+
+    .header-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: flex-start;
+      min-height: 70px;
+    }
+
+    .logo-left, .logo-right {
+      flex: 0 0 auto;
+      display: flex;
+      z-index: 20;
+    }
+    
+    .logo-left { justify-content: flex-start; margin-top: -12px; margin-left: -16px; }
+    .logo-right { justify-content: flex-end; margin-top: -12px; margin-right: -16px; }
+    
+    .header-logo {
+      height: 65px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.05));
+    }
+
+    .title-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 15;
+    }
+
+    .hero-title {
+      font-family: "Baloo 2", cursive;
+      font-size: clamp(32px, 4vw, 42px);
+      color: var(--red);
+      margin: 0;
+      line-height: 1;
+      text-shadow: 
+        -3px -3px 0 #fff, 3px -3px 0 #fff, -3px 3px 0 #fff, 3px 3px 0 #fff,
+        -4px 0 0 #fff, 4px 0 0 #fff, 0 -4px 0 #fff, 0 4px 0 #fff,
+        0 8px 16px rgba(0,0,0,0.15);
+    }
+    .hero-title small {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(14px, 2vw, 18px);
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 8px;
+      text-shadow: 
+        -2px -2px 0 #fff, 2px -2px 0 #fff, -2px 2px 0 #fff, 2px 2px 0 #fff;
+    }
+
+    /* --- GRID CARDS --- */
+    .cards {
+      padding: 20px 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      background: #ffffff;
+    }
+
+    .card {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px;
+      border-radius: 18px;
+      box-shadow: 0 8px 16px rgba(16, 17, 20, 0.06);
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: all .2s cubic-bezier(0.25, 0.8, 0.25, 1);
+      min-height: 120px;
+      border-style: solid;
+      border-width: 3px;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(16, 17, 20, 0.12);
+    }
+
+    .card-1 { border-color: var(--mint); background: rgba(191,239,232, 0.25); }
+    .card-2 { border-color: var(--red); background: rgba(198,40,40, 0.06); }
+    .card-3 { border-color: var(--yellow); background: rgba(255,201,40, 0.15); }
+    .card-4 { border-color: var(--turq); background: rgba(32,184,174, 0.1); }
+    .card-5 { border-color: var(--orange); background: rgba(255,176,103, 0.15); }
+    .card-6 { border-color: var(--yellow); background: rgba(255,201,40, 0.15); }
+
+    .n {
+      width: 42px; height: 42px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Baloo 2', cursive;
+      font-weight: 800;
+      font-size: 18px;
+      border: 3px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      flex: 0 0 auto;
+    }
+
+    .ct h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.1;
+      color: var(--ink);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+    .ct p {
+      margin: 8px 0 0;
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--muted);
+      max-width: 40ch;
+    }
+
+    .pill {
+      margin-top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 2px solid rgba(16, 17, 20, 0.08);
+      font-weight: 800;
+      font-size: 11px;
+      color: var(--ink);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .dot { width: 12px; height: 12px; border-radius: 999px; }
+    .dot.r { background: var(--red); }
+    .dot.y { background: var(--yellow); }
+    .dot.t { background: var(--turq); }
+    .dot.m { background: var(--mint); }
+    .dot.o { background: var(--orange); }
+
+    /* ikigai full width */
+    .card.wide {
+      grid-column: 1 / -1;
+      align-items: center;
+      background: linear-gradient(90deg, rgba(255, 201, 40, 0.15), rgba(32, 184, 174, 0.15));
+      border: 4px solid transparent;
+      background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), conic-gradient(from 10deg, var(--turq), var(--yellow), var(--red), var(--turq));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+    }
+    .card.wide:hover {
+      box-shadow: 0 16px 32px rgba(16,17,20,0.15);
+    }
+    .badge-iki {
+      width: 42px; height: 42px;
+      border-radius: 12px;
+      background: conic-gradient(from 10deg, var(--turq), var(--yellow), var(--red), var(--turq));
+      border: 3px solid white;
+      box-shadow: 0 8px 16px rgba(16, 17, 20, 0.15);
+      flex: 0 0 auto;
+    }
+
+    /* FRISE COULEURS */
+    .frieze {
+      display: flex;
+      gap: 12px;
+      padding: 0 20px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+    .capsule {
+      height: 16px;
+      border-radius: 999px;
+      flex: 1;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* --- MODALE --- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(16, 17, 20, 0.6);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 24px;
+      padding: 32px;
+      position: relative;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 4px solid var(--turq); /* Défaut, changé par JS */
+      max-height: 90vh; /* Limite hauteur */
+      display: flex;
+      flex-direction: column;
+    }
+    .modal-overlay.active .modal-content {
+      transform: translateY(0);
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #f1f5f9;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--ink);
+      transition: all 0.2s;
+    }
+    .modal-close:hover {
+      background: var(--red);
+      color: white;
+    }
+    .modal-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      flex-shrink: 0; /* Ne pas rétrécir */
+    }
+    .modal-header .n {
+      font-size: 20px;
+      width: 50px;
+      height: 50px;
+    }
+    .modal-header h2 {
+      font-size: 24px;
+      margin: 0;
+      line-height: 1.1;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+    .modal-body {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 24px;
+      overflow-y: auto; /* Scroll si contenu long */
+      padding-right: 8px; /* Espace pour la scrollbar */
+    }
+    .modal-body strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .modal-footer {
+        flex-shrink: 0; /* Garder le footer visible */
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .modal-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 16px;
+      background: var(--ink);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+      border-radius: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    /* Scrollbar pour modal body */
+    .modal-body::-webkit-scrollbar { width: 6px; }
+    .modal-body::-webkit-scrollbar-track { background: transparent; }
+    .modal-body::-webkit-scrollbar-thumb { background: #E2E8F0; border-radius: 4px; }
+
+    /* EU footer */
+    .eu {
+      margin: 0 20px 20px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 3px solid rgba(16, 17, 20, 0.08);
+      box-shadow: 0 10px 20px rgba(16, 17, 20, 0.05);
+      padding: 20px;
+      color: var(--ink);
+      text-align: center;
+      position: relative;
+      z-index: 10;
+    }
+    .eu-top {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .eu-logo-container {
+      background: transparent;
+      padding: 0;
+      display: inline-block;
+    }
+    .eu-logo {
+      height: 75px;
+      width: auto;
+      display: block;
+      mix-blend-mode: multiply;
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.05));
+    }
+    .eu p {
+      margin: 8px auto 0;
+      max-width: 90ch;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .eu .copyright {
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .eu .link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--turq);
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .eu .link:hover { text-decoration: underline; color: var(--red);}
+
+    /* RESPONSIVE */
+    @media (max-width: 920px) {
+      .header-logo { height: 50px; }
+      .eu-logo { height: 65px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 760px) {
+      .header-content { flex-wrap: wrap; align-items: center; }
+      .logo-left, .logo-right { margin: 0; }
+      
+      /* Ajustement spécifique mobile pour les logos du header */
+      .header-logo { height: 42px; }
+      
+      .title-center { position: relative; top: auto; left: auto; transform: none; order: 3; width: 100%; margin-top: 15px; }
+      .hero-title { font-size: 28px; } /* Titre légèrement réduit pour l'harmonie mobile */
+      
+      .cards { grid-template-columns: 1fr; }
+      .card.wide { grid-column: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- BACKGROUND DECORATIONS -->
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="bg-circle c-mint"></div>
+    <div class="bg-circle c-yellow"></div>
+    <div class="bg-circle c-orange"></div>
+    <div class="bg-circle c-red"></div>
+
+    <svg class="bg-puzzle p-red" viewBox="0 0 24 24">
+      <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+    </svg>
+    <svg class="bg-puzzle p-turq" viewBox="0 0 24 24">
+      <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+    </svg>
+    <svg class="bg-puzzle p-yellow" viewBox="0 0 24 24">
+      <path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>
+    </svg>
+  </div>
+
+  <main class="wrap">
+    <section class="frame">
+
+      <!-- HEADER EXPLOSIF -->
+      <header class="hero">
+        <div class="hero-inner">
+          
+          <!-- PATTERN DE FOND DU HEADER -->
+          <div class="header-pattern" aria-hidden="true">
+            <div class="hs hs-1"></div>
+            <div class="hs hs-2"></div>
+            <div class="hs hs-3"></div>
+            <div class="hs hs-4"></div>
+            <div class="hs hs-5"></div>
+            
+            <div class="hs-outline ho-1"></div>
+            <div class="hs-outline ho-2"></div>
+            <div class="hs-outline ho-3"></div>
+            <div class="hs-outline ho-4"></div>
+            <div class="hs-outline ho-5"></div>
+            <div class="hs-outline ho-6"></div>
+            <div class="hs-outline ho-7"></div>
+            
+            <svg class="hp hp-1" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+            <svg class="hp hp-2" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+            <svg class="hp hp-3" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+            <svg class="hp hp-4" viewBox="0 0 24 24"><path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/></svg>
+          </div>
+
+          <!-- CONTENU DU HEADER (Sans fond opaque) -->
+          <div class="header-content">
+            <div class="logo-left">
+              <img src="https://static.wixstatic.com/media/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif/v1/fill/w_224,h_60,al_c,q_80,enc_avif,quality_auto/dd5dab_47743b1c86024865ba19e623a3db327f~mv2.avif" alt="Logo Mission Locale Pays Basque" class="header-logo" loading="lazy" />
+            </div>
+            
+            <div class="title-center">
+              <h1 class="hero-title">MLS4YOU<small>#1. Emploi</small></h1>
+            </div>
+
+            <div class="logo-right">
+              <img src="https://www.lifeskills4youth.eu/wp-content/uploads/2024/07/LS4YOU_Logo.png" alt="Logo LS4YOU" class="header-logo" loading="lazy" />
+            </div>
+          </div>
+
+        </div>
+      </header>
+
+      <!-- CARDS -->
+      <section class="cards" aria-label="Parcours MLS4YOU">
+
+        <div class="card card-1" onclick="openModal('intro')">
+          <div class="n" style="background: var(--mint); color: var(--ink);">1</div>
+          <div class="ct">
+            <h3>INTRODUCTION</h3>
+            <p>Le parcours Life Skills : 7 modules complémentaires pour tracer ton parcours d’insertion.</p>
+            <span class="pill"><span class="dot t"></span>Démarrer ici</span>
+          </div>
+        </div>
+
+        <div class="card card-2" onclick="openModal('perso')">
+          <div class="n" style="background: var(--red); color: white;">2</div>
+          <div class="ct">
+            <h3>MA PERSONNALITÉ</h3>
+            <p>Votre fonctionnement naturel. Travailler en phase avec son tempérament réduit la fatigue.</p>
+            <span class="pill"><span class="dot r"></span>Test 16 profils</span>
+          </div>
+        </div>
+
+        <div class="card card-3" onclick="openModal('valeurs')">
+          <div class="n" style="background: var(--yellow); color: var(--ink);">3</div>
+          <div class="ct">
+            <h3>VALEURS &amp; OBJECTIFS</h3>
+            <p>Vos moteurs profonds + vos priorités actionnables. Aligner valeurs et objectifs pro.</p>
+            <span class="pill"><span class="dot y"></span>Motivation + priorités</span>
+          </div>
+        </div>
+
+        <div class="card card-4" onclick="openModal('competences')">
+          <div class="n" style="background: var(--turq); color: white;">4</div>
+          <div class="ct">
+            <h3>MES COMPÉTENCES</h3>
+            <p>Vie perso, loisirs, jobs courts, galères, bénévolat : tout peut devenir compétence.</p>
+            <span class="pill"><span class="dot m"></span>Ce que je sais faire</span>
+          </div>
+        </div>
+
+        <div class="card card-5" onclick="openModal('energie')">
+          <div class="n" style="background: var(--orange); color: white;">5</div>
+          <div class="ct">
+            <h3>MON ÉNERGIE</h3>
+            <p>Chercher sa voie demande une énergie physique et mentale. Prendre soin de soi = réussir.</p>
+            <span class="pill"><span class="dot o"></span>Rythme &amp; performance</span>
+          </div>
+        </div>
+
+        <div class="card card-6" onclick="openModal('communiquer')">
+          <div class="n" style="background: var(--yellow); color: var(--ink);">6</div>
+          <div class="ct">
+            <h3>COMMUNIQUER</h3>
+            <p>S’Affirmer → Pitch Star → Zone de confort : se présenter avec impact et progresser par l’action.</p>
+            <span class="pill"><span class="dot y"></span>Prise de parole</span>
+          </div>
+        </div>
+
+        <div class="card wide" onclick="openModal('ikigai')">
+          <div class="badge-iki" aria-hidden="true"></div>
+          <div class="ct">
+            <h3 style="font-size: 18px;">MON IKIGAI — SYNTHÈSE</h3>
+            <p style="font-size: 14px;">Là où talents naturels, motivations, compétences et énergie optimale rencontrent des opportunités concrètes.</p>
+            <span class="pill"><span class="dot r"></span>Conclusion</span>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- FRISE COULEURS LS4YOU -->
+      <div class="frieze" aria-hidden="true">
+        <div class="capsule bg-yellow" style="background: var(--yellow);"></div>
+        <div class="capsule bg-turq" style="background: var(--turq);"></div>
+        <div class="capsule bg-red" style="background: var(--red);"></div>
+        <div class="capsule bg-mint" style="background: var(--mint);"></div>
+      </div>
+
+      <!-- EU FOOTER -->
+      <footer class="eu" aria-label="Mentions UE">
+        <div class="eu-top">
+          <div class="eu-logo-container">
+            <img src="https://www.immigration.interieur.gouv.fr/var/miomcti/storage/images/media/mi/images/logos-pictos/cofinance-par-l-union-europeenne-v/1060317-1-fre-FR/Cofinance-par-l-Union-europeenne-V.png" alt="Cofinancé par l'Union européenne" class="eu-logo" loading="lazy">
+          </div>
+        </div>
+        <div class="copyright">
+          © 2026 LS4YOU Project Nr. 2023-2-FR02-KA220-YOU-000175417
+        </div>
+        <p>
+          Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily
+          reflect those of the European Union or the Agence Erasmus+ France Jeunesse &amp; Sport (Agence du Service Civique).
+          Neither the European Union nor the granting authority can be held responsible for them.
+        </p>
+        <a class="link" href="#" onclick="return false;">Data Privacy Statement &amp; Imprint</a>
+      </footer>
+
+    </section>
+  </main>
+
+  <!-- MODAL STRUCTURE -->
+  <div id="modal-overlay" class="modal-overlay" aria-hidden="true" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()"><i data-lucide="x"></i></button>
+      <div class="modal-header">
+        <div class="n" id="modal-number"></div>
+        <h2 id="modal-title"></h2>
+      </div>
+      <div class="modal-body" id="modal-desc"></div>
+      <div class="modal-footer">
+        <!-- Buttons injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DONNÉES DES CARTES
+    const CARDS_DATA = {
+      intro: {
+        number: 1,
+        title: "INTRODUCTION",
+        color: "var(--mint)",
+        desc: `<strong>Construire son projet professionnel par les Life Skills</strong><br><br>
+        Cet outil s'inscrit dans un parcours structuré de développement des Life Skills pour jeunes en insertion. Il articule cinq modules complémentaires qui dessinent progressivement votre <strong>portrait professionnel unique</strong> :<br><br>
+        • <strong>Personnalité (16 Profils)</strong> → Votre fonctionnement naturel<br>
+        • <strong>Valeurs</strong> → Vos moteurs de motivation<br>
+        • <strong>Objectifs ABC</strong> → Vos priorités actionnables<br>
+        • <strong>Compétences situationnelles</strong> → Vos forces prouvées<br>
+        • <strong>Énergie</strong> → Vos moments de performance optimale<br>
+        • <strong>S'affirmer</strong> → Votre communication authentique<br>
+        • <strong>Sortie zone de confort</strong> → Votre capacité d'évolution<br><br>
+        <strong>Logique progressive :</strong> La personnalité éclaire le <em>comment</em>, les valeurs le <em>pourquoi</em>, les objectifs le <em>quoi</em>, les compétences le <em>ce que je maîtrise</em>, l'énergie le <em>quand je réussis</em>, l'affirmation le <em>comment je le transmets</em>, et la sortie de zone de confort le <em>comment je grandis</em>.<br><br>
+        <strong>Synthèse Ikigai :</strong> L'intersection de ces dimensions révèle votre <strong>zone d'excellence professionnelle</strong> – là où vos talents naturels, motivations profondes, compétences validées et énergie optimale rencontrent les besoins du marché du travail.`,
+        link: "#", 
+        btnText: "" 
+      },
+      perso: {
+        number: 2,
+        title: "MA PERSONNALITÉ",
+        color: "var(--red)",
+        desc: `La personnalité désigne l'ensemble de vos tendances comportementales stables. C'est votre manière habituelle de réagir face aux situations professionnelles, de communiquer avec les équipes ou les employeurs, et de traiter l'information.<br><br>
+        Nous allons découvrir le <strong>test des 16 personnalités</strong> (inspiré du MBTI), un outil d'auto-connaissance qui identifie votre fonctionnement selon 4 dimensions :<br>
+        • Équipe ou Solo<br>
+        • Logique ou Social<br>
+        • Détails ou Global<br>
+        • Cadre ou Souplesse<br><br>
+        <em>Durée : 5 min. Chaque profil génère une carte de forces téléchargeable pour valoriser vos atouts.</em>`,
+        link: "https://mlpb-tools.github.io/16perso/",
+        btnText: "Faire le test"
+      },
+      valeurs: {
+        number: 3,
+        title: "VALEURS & OBJECTIFS",
+        color: "var(--yellow)",
+        desc: `Votre profil personnalité donne le <strong>“COMMENT”</strong> (votre mode opératoire naturel).<br>
+        Vos valeurs donnent le <strong>“POURQUOI”</strong> (vos moteurs profonds qui donnent sens à vos actions).<br><br>
+        Une valeur est un principe ou une conviction profonde qui guide vos comportements. C’est ce qui compte vraiment pour vous (ex. : respect, autonomie, solidarité).<br><br>
+        <strong>Rôle clé dans le travail :</strong><br>
+        • <strong>Motivation :</strong> Engagement total quand le poste correspond à vos valeurs<br>
+        • <strong>Satisfaction :</strong> Épanouissement dans un environnement qui les respecte<br>
+        • <strong>Choix métiers :</strong> Orientation vers des secteurs alignés<br><br>
+        <em>“Vos valeurs prioritaires orientent directement vos objectifs professionnels”</em><br><br>
+        <strong>Transition :</strong> Transformons maintenant ces valeurs en actions concrètes.`,
+        link: "https://mlpb-tools.github.io/mes-valeurs/",
+        btnText: "Définir mes valeurs"
+      },
+      competences: {
+        number: 4,
+        title: "MES COMPÉTENCES",
+        color: "var(--turq)",
+        desc: "Vie perso, loisirs, jobs courts, galères, bénévolat : tout peut devenir compétence.<br><br>Apprenez à identifier vos savoir-faire (Hard Skills) et savoir-être (Soft Skills) pour les valoriser auprès des recruteurs.",
+        link: "https://mlpb-tools.github.io/mes-competences/",
+        btnText: "Lister mes atouts"
+      },
+      energie: {
+        number: 5,
+        title: "MON ÉNERGIE",
+        color: "var(--orange)",
+        desc: "Chercher sa voie demande une énergie physique et mentale importante. Comprendre vos rythmes, ce qui vous donne de l'énergie et ce qui vous en coûte est essentiel pour réussir sur la durée.",
+        link: "https://mlpb-tools.github.io/Energie/",
+        btnText: "Analyser mon rythme"
+      },
+      communiquer: {
+        number: 6,
+        title: "COMMUNIQUER",
+        color: "var(--yellow)",
+        desc: `<strong>AXE 6 : COMMUNIQUER</strong><br>
+        Dans cette étape clé de votre parcours Life Skills, trois activités interconnectées vous préparent à vous présenter avec impact et à expérimenter pour évoluer :<br><br>
+        
+        <strong>1. S'Affirmer</strong> — <em>Votre prise de parole authentique</em><br>
+        • <strong>Objectif :</strong> Dire qui vous êtes, vos compétences, vos projets avec clarté et confiance (entretien stage, RDV ML, réseau pro).<br><br>
+        
+        <strong>2. Pitch Star</strong> — <em>Votre présentation percutante</em><br>
+        • <strong>Outil :</strong> Méthode STAR adaptée jeunes (Situation/Tâche/Action/Résultat)<br>
+        • <strong>Objectif :</strong> Structurer une réponse pour entretiens/rencontres pro<br>
+        • <strong>Résultat :</strong> Template rempli → prêt pour recruteurs<br><br>
+        
+        <strong>3. Zone de Confort</strong> — <em>Votre évolution par l'action</em><br>
+        • <strong>Outil :</strong> Cartographie 3 zones (confort/élasticité/panique) + défis gradués<br>
+        • <strong>Objectif :</strong> Identifier 3 actions concrètes pour progresser (nouveau mail, RDV inconnu, stage différent)<br><br>
+        
+        <div style="background:rgba(0,0,0,0.05); padding:10px; border-radius:8px; border-left:4px solid var(--ink); margin-top:10px;">
+        <strong>Logique pédagogique :</strong><br>
+        S'Affirmer (dire qui je suis) → Pitch Star (dire ce que j'ai fait) → Zone Confort (dire ce que je vais oser)
+        </div>`,
+        // NOUVEAU : MULTIPLES LIENS
+        multiLinks: [
+            { text: "1. S'Affirmer", url: "https://mlpb-tools.github.io/s-affirmer/" },
+            { text: "2. Pitch Star", url: "https://mlpb-tools.github.io/pitch-star/" },
+            { text: "3. Zone de Confort", url: "https://mlpb-tools.github.io/zone-de-confort/" }
+        ]
+      },
+      ikigai: {
+        number: "★",
+        title: "MON IKIGAI — SYNTHÈSE",
+        color: "var(--red)",
+        desc: "Là où talents naturels, motivations, compétences et énergie optimale rencontrent des opportunités concrètes.<br><br>Faites la synthèse de tout votre parcours pour identifier votre zone de génie.",
+        link: "https://mlpb-tools.github.io/ikigai/",
+        btnText: "Voir ma synthèse"
+      }
+    };
+
+    // GESTION MODALE
+    function openModal(cardId) {
+      const data = CARDS_DATA[cardId];
+      if (!data) return;
+
+      const modal = document.getElementById('modal-overlay');
+      const content = modal.querySelector('.modal-content');
+      const footer = modal.querySelector('.modal-footer');
+      
+      // Update Content
+      document.getElementById('modal-number').innerText = data.number;
+      document.getElementById('modal-number').style.background = data.color;
+      document.getElementById('modal-number').style.color = (data.color === 'var(--red)' || data.color === 'var(--turq)') ? 'white' : 'var(--ink)';
+      
+      document.getElementById('modal-title').innerText = data.title;
+      document.getElementById('modal-desc').innerHTML = data.desc;
+      
+      // Clear Footer
+      footer.innerHTML = '';
+
+      if (data.multiLinks) {
+          // Cas multi-boutons (Communique)
+          data.multiLinks.forEach(link => {
+              const btn = document.createElement('a');
+              btn.className = 'modal-btn';
+              btn.href = link.url;
+              btn.target = '_blank';
+              btn.innerText = link.text;
+              btn.style.background = data.color;
+              btn.style.color = (data.color === 'var(--yellow)' || data.color === 'var(--mint)') ? 'var(--ink)' : 'white';
+              btn.style.marginBottom = '10px';
+              footer.appendChild(btn);
+          });
+      } else if (data.link && data.link !== '#') {
+          // Cas simple (1 bouton)
+          const btn = document.createElement('a');
+          btn.className = 'modal-btn';
+          btn.href = data.link;
+          btn.target = '_blank';
+          btn.innerText = data.btnText;
+          btn.style.background = data.color;
+          btn.style.color = (data.color === 'var(--yellow)' || data.color === 'var(--mint)') ? 'var(--ink)' : 'white';
+          footer.appendChild(btn);
+      }
+      // Si aucun lien, le footer reste vide (masqué)
+
+      // Border color
+      content.style.borderColor = data.color;
+
+      // Show
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Wait for everything to load including external scripts
+    window.addEventListener('load', function() {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    });
+  </script>
+</body>
+</html>
